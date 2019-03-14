@@ -5,6 +5,7 @@ LABEL authors="Isaac (Ike) Arias <ikester@gmail.com>"
 RUN apt-get update && \
 	apt-get install -y \
 		curl \
+		python-pip \
 		bzip2 \
 		libfreetype6 \
 		libgl1-mesa-dev \
@@ -23,6 +24,10 @@ RUN apt-get update && \
 		libxrender1 && \		
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install PyYaml
+
+RUN git clone https://github.com/dfki-ric/phobos.git && git checkout release-1.0 && python3 setup.py --startup-preset
 
 ENV BLENDER_MAJOR 2.79
 ENV BLENDER_VERSION 2.79
