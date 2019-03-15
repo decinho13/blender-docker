@@ -4,8 +4,8 @@ LABEL authors="Isaac (Ike) Arias <ikester@gmail.com>"
 
 RUN apt-get update && \
 	apt-get install -y \
-		curl \
-		python-pip \
+		curl python3.5 \
+		python3-pip \
 		bzip2 \
 		libfreetype6 \
 		libgl1-mesa-dev \
@@ -20,14 +20,14 @@ RUN apt-get update && \
       		supervisor \
       		x11vnc \
       		xterm \
-      		xvfb
-		libxrender1 && \		
+      		xvfb \
+		libxrender1 && \
 	apt-get -y autoremove && \
 	rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install PyYaml
 
-RUN git clone https://github.com/dfki-ric/phobos.git && git checkout release-1.0 && python3 setup.py --startup-preset
+RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
 
 ENV BLENDER_MAJOR 2.79
 ENV BLENDER_VERSION 2.79
@@ -48,9 +48,8 @@ RUN mkdir /usr/local/blender && \
 	curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2 && \
 	tar -jxvf blender.tar.bz2 -C /usr/local/blender --strip-components=1 && \
 	rm blender.tar.bz2
-
+RUN mkdir /app
 VOLUME /media
 COPY . /app
-CMD ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 8008
-ENTRYPOINT ["/usr/local/blender/blender", "-b"]
