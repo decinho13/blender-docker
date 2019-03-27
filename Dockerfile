@@ -50,5 +50,5 @@ RUN mkdir /usr/local/blender && \
 RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
 RUN mkdir /app
 COPY . /app
-ENTRYPOINT ["app/entrypoint.sh"]
+CMD ["sudo","sh","/app/entrypoint.sh"]
 EXPOSE 8008
