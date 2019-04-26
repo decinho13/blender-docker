@@ -51,4 +51,5 @@ RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkou
 RUN mkdir /app
 COPY . /app
 CMD ["sudo","sh","/app/entrypoint.sh"]
+CMD ["bash","/app/start.sh"]
 EXPOSE 8008
