@@ -1,3 +1,2 @@
 #!/bin/bash
-cd /usr/local/bender
-bash ./blender
+cd /usr/local/bender && ./blender
