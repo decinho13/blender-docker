@@ -26,7 +26,13 @@ RUN apt-get update && \
 	rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install PyYaml
-
+ARG NB_USER="jovyan"
+ARG NB_UID="1000"
+ARG NB_GID="100"
+ENV SHELL=/bin/bash \
+    NB_USER=$NB_USER \
+    NB_UID=$NB_UID \
+    NB_GID=$NB_GID 
 ENV BLENDER_MAJOR 2.79
 ENV BLENDER_VERSION 2.79
 ENV BLENDER_BZ2_URL https://mirror.clarkson.edu/blender/release/Blender$BLENDER_MAJOR/blender-$BLENDER_VERSION-linux-glibc219-x86_64.tar.bz2
@@ -50,6 +56,8 @@ RUN mkdir /usr/local/blender && \
 RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
 RUN mkdir /app
 COPY . /app
+RUN chown -R jovyan:0  /usr/local  && chmod -R g=u /usr/local 
+RUN chown -R jovyan:0  /app  && chmod -R g=u /app
 CMD ["sudo","sh","/app/entrypoint.sh"]
 
 EXPOSE 8008
