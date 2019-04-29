@@ -56,8 +56,9 @@ RUN mkdir /usr/local/blender && \
 RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
 RUN mkdir /app
 COPY . /app
-RUN chown -R jovyan:0  /usr/local  && chmod -R g=u /usr/local 
-RUN chown -R jovyan:0  /app  && chmod -R g=u /app
+USER root
+RUN chown -R 1000:0  /usr/local  && chmod -R g=u /usr/local 
+RUN chown -R 1000:0  /app  && chmod -R g=u /app
 CMD ["sudo","sh","/app/entrypoint.sh"]
-
+USER 1000
 EXPOSE 8008
