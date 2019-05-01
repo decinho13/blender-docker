@@ -52,7 +52,7 @@ ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
 COPY . ${APP_ROOT}/bin/
 RUN cd ${APP_ROOT}/bin/ && mkdir blender && \
 	curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2 && \
-	tar -jxvf blender.tar.bz2 -C /usr/local/blender --strip-components=1 && \
+	tar -jxvf blender.tar.bz2 -C ${APP_ROOT}/bin/blender --strip-components=1 && \
 	rm blender.tar.bz2	
 RUN cd ${APP_ROOT}/bin/blender &&  git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
 
