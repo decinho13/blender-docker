@@ -47,18 +47,23 @@ ENV HOME=/root \
     RUN_XTERM=yes \
     RUN_FLUXBOX=yes
 
-
-RUN mkdir /usr/local/blender && \
+ENV APP_ROOT=/opt/app-root
+ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+COPY . ${APP_ROOT}/bin/
+RUN cd ${APP_ROOT}/bin/ && mkdir blender && \
 	curl -SL "$BLENDER_BZ2_URL" -o blender.tar.bz2 && \
 	tar -jxvf blender.tar.bz2 -C /usr/local/blender --strip-components=1 && \
-	rm blender.tar.bz2
-	
-RUN git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
-RUN mkdir /app
-COPY . /app
-USER root
-RUN chown -R 1000:0  /usr/local  && chmod -R g=u /usr/local 
-RUN chown -R 1000:0  /app  && chmod -R g=u /app
-CMD ["sudo","sh","/app/entrypoint.sh"]
-USER 1000
+	rm blender.tar.bz2	
+RUN cd ${APP_ROOT}/bin/blender &&  git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
+
+RUN chmod -R u+x ${APP_ROOT}/bin && \
+    chgrp -R 0 ${APP_ROOT} && \
+    chmod -R g=u ${APP_ROOT} /etc/passwd
+USER 10001
 EXPOSE 8008
+WORKDIR ${APP_ROOT}
+
+ENTRYPOINT [ "uid_entrypoint" ]
+CMD ["bash","entrypoint.sh"]
+
+
