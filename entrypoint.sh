@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-exec supervisord -c /app/supervisord.conf
+exec supervisord -c /opt/app-root/bin/supervisord.conf
