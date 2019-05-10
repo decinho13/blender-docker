@@ -62,7 +62,7 @@ RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
 
-#USER 10001
+USER 10001
 EXPOSE 8008
 WORKDIR ${APP_ROOT}
 
