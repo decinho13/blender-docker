@@ -56,12 +56,12 @@ RUN cd ${APP_ROOT}/bin/ && mkdir blender && \
 	tar -jxvf blender.tar.bz2 -C ${APP_ROOT}/bin/blender --strip-components=1 && \
 	rm blender.tar.bz2	
 RUN cd ${APP_ROOT}/bin/blender &&  git clone https://github.com/dfki-ric/phobos.git && cd phobos && git checkout release-1.0 && python3 setup.py --startup-preset
-
+RUN cd ${APP_ROOT}/bin/ && mkdir share
 #fixing permissions for OpenShift random User
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
-RUN cd ${APP_ROOT}/bin/ && mkdir share
+
 USER 10001
 EXPOSE 8008
 WORKDIR ${APP_ROOT}
