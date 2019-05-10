@@ -61,8 +61,8 @@ RUN cd ${APP_ROOT}/bin/blender &&  git clone https://github.com/dfki-ric/phobos.
 RUN chmod -R u+x ${APP_ROOT}/bin && \
     chgrp -R 0 ${APP_ROOT} && \
     chmod -R g=u ${APP_ROOT} /etc/passwd
-RUN cd ${APP_ROOT}/bin/ && mkdir share && chown 10001:10001 ./share    
-USER 10001
+
+#USER 10001
 EXPOSE 8008
 WORKDIR ${APP_ROOT}
 
