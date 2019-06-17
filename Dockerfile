@@ -1,5 +1,5 @@
 # Dockerfile based on ikester/blender-docker
-FROM ubuntu:xenial
+FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu16.04
 #------------------------------------ Install dependencies for Blender & NoVNC Server -----------------------
 RUN apt-get update && \
 	apt-get install -y \
